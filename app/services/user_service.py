@@ -16,13 +16,13 @@ def user_reg (db: Session,data: UserReg) :
     if ex_un :
         raise HTTPException (
             status_code= 409,
-            detail="username already exists"
+            detail="username already existed"
         )
 
     if ex_em :
         raise HTTPException (
             status_code=409,
-            detail="email already exists"
+            detail="email already existed"
         )
 
     hashed_pw = hash_pw(data.password)
