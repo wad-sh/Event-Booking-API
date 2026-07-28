@@ -2,9 +2,21 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from models.event import Event
 from schemas.event_schema import *
+from datetime import datetime,timezone
 
 
 def create_event (db: Session,data: EventCreate,user_id:int) : 
+    if data.capacity <= 0 :
+          raise HTTPException(
+                status_code=400,
+                detail="capacity should be more than 0"
+          )
+    if data.date <= datetime.now(timezone.utc) :
+          raise HTTPException(
+                          status_code=400,
+                          detail="event date must be in the future"
+                    )
+    
     new_event = Event(
         title = data.title,
         description = data.description,
@@ -20,7 +32,7 @@ def create_event (db: Session,data: EventCreate,user_id:int) :
 
 
 def get_events(db: Session) : 
-    events = db.query(Event).all()
+    events = db.query(Event).filter(Event.date > datetime.now(timezone.utc)).order_by(Event.date).all()
     return events
     
 
@@ -35,8 +47,8 @@ def get_event (db: Session,event_id: int) :
     return event
 
 
-def up_event(db: Session,user_id: int,data: EventUp) : 
-    e = db.query(Event).filter(Event.created_by==user_id, Event.id == data.id).first()
+def up_event(db: Session,event_id:int,data: EventUp) : 
+    e = db.query(Event).filter( Event.id == event_id).first()
     if not e :
             raise HTTPException(
                 status_code=404,
@@ -48,17 +60,25 @@ def up_event(db: Session,user_id: int,data: EventUp) :
                          status_code=400 ,
                          detail="no change"
                      ) 
-    if data.capacity > 0 :
+    if data.capacity is not None and data.capacity <= 0:
           raise HTTPException(
-                                   status_code=401 ,
+                                   status_code=400 ,
                                    detail="positive numbers only from capacity"
                                ) 
     if data.title is not None:
          e.title = data.title
     if data.description is not None:
              e.description = data.description
-    if data.date is not None:
-             e.date = data.date
+
+
+    if data.date is not None :
+        if data.date <= datetime.now(timezone.utc) :
+            raise HTTPException(
+                        status_code=400,
+                        detail="event date must be in the future"
+                    )
+        e.date = data.date
+    
     if data.capacity is not None:
              e.capacity = data.capacity
 
@@ -66,8 +86,8 @@ def up_event(db: Session,user_id: int,data: EventUp) :
     db.refresh(e)
     return e
 
-def delete_event (db: Session,user_id: int,event_id: int) : 
-    event = db.query(Event).filter(Event.created_by==user_id, Event.id == event_id).first()
+def delete_event (db: Session,event_id: int) : 
+    event = db.query(Event).filter( Event.id == event_id).first()
     if  not event :
             raise HTTPException(
                 status_code=404,

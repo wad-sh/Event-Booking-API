@@ -25,7 +25,7 @@ class Event (Base) :
 
 
     date= Column(
-        DateTime,
+        DateTime(timezone=True),
         nullable=False
     )
 
@@ -44,7 +44,7 @@ class Event (Base) :
 
 
     created_at= Column(
-        DateTime,
+        DateTime(timezone=True),
         server_default=func.now(),
         nullable=False
 
