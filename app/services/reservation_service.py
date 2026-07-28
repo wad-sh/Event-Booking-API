@@ -34,6 +34,9 @@ def create_reserv (db:Session,user_id: int,event_id: int) :
         db.refresh(new_res)
 
         return new_res
+    except HTTPException:
+        db.rollback
+        raise
     except Exception:
         db.rollback()
         raise HTTPException(
