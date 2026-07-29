@@ -6,9 +6,6 @@ from routers.reservation_router import res_router
 
 app = FastAPI()
 
-
-Base.metadata.create_all(bind=engine)
-
 app.include_router(user_router)
 app.include_router(event_router)
 app.include_router(res_router)
