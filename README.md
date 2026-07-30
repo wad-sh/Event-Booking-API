@@ -35,6 +35,20 @@ The project provides user authentication, role-based authorization, event manage
 
 ---
 
+## Backend Engineering Concepts Implemented
+
+- JWT-based authentication and authorization.
+- Role-based access control (Admin/User).
+- FastAPI dependency injection using `Depends`.
+- SQLAlchemy ORM with PostgreSQL.
+- Database schema management using Alembic migrations.
+- Transaction management with rollback handling.
+- Pessimistic row-level locking using `SELECT FOR UPDATE` for reservation concurrency handling.
+- Race condition prevention during event reservations.
+- Database constraints for data integrity (unique constraints and foreign keys).
+- Layered architecture (routers, services, models, schemas).
+- Request validation using Pydantic schemas.
+
 ## Project Structure
 
 ```
