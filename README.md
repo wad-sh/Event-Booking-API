@@ -128,10 +128,29 @@ ALGORITHM=HS256
 
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
+---
+## Creating the First Admin User
+
+The project includes an admin creation script to initialize the first administrator account.
+
+Run:
+
+```bash
+py -m scripts.create_admin
+```
+The script will:
+
+Ask for admin username, email, and password.
+Hash the password securely.
+Create a user with Admin role.
+Store the admin account in the PostgreSQL database.
+
+This avoids manually modifying the database when setting up the first administrator.
+
 
 ---
 
-# Database Setup
+## Database Setup
 
 This project uses PostgreSQL.
 
