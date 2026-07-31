@@ -1,5 +1,7 @@
 from database.database import SessionLocal
 from models.user import User
+from models.reservation import Reservation
+from models.event import Event
 from auth.security import hash_pw
 from enums.adminuser import AdminUser
 from getpass import getpass
@@ -28,7 +30,7 @@ try :
     db.commit()
     db.refresh(admin)
 
-    print(admin)
+    print(f"Admin created successfully: {admin.username}")
 except Exception as e:
     db.rollback()
     print(e)

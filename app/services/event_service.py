@@ -28,7 +28,7 @@ def create_event (db: Session,data: EventCreate,user_id:int) :
     db.add(new_event)
     db.commit()
     db.refresh(new_event)
-    return new_event
+    return e_resp(new_event)
 
 
 def get_events(db: Session) : 
@@ -44,7 +44,7 @@ def get_event (db: Session,event_id: int) :
             status_code=404,
             detail="can't find event"
         )
-    return event
+    return e_resp(event)
 
 
 def up_event(db: Session,event_id:int,data: EventUp) : 
@@ -84,7 +84,7 @@ def up_event(db: Session,event_id:int,data: EventUp) :
 
     db.commit()
     db.refresh(e)
-    return e
+    return e_resp(e)
 
 def delete_event (db: Session,event_id: int) : 
     event = db.query(Event).filter( Event.id == event_id).first()
@@ -101,3 +101,12 @@ def delete_event (db: Session,event_id: int) :
 
 
 
+def e_resp (event: Event) :
+      return {
+        "id": event.id,
+        "title": event.title,
+        "description": event.description,
+        "date": event.date,
+        "capacity": event.capacity,
+        "remaining":  event.capacity - len(event.reservations)
+      }

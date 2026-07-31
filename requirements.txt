@@ -1,10 +1,10 @@
 alembic==1.18.5
 fastapi==0.141.1
-pwdlib==0.3.0
+pwdlib[argon2]==0.3.0
 pydantic==2.13.4
 python-dotenv==1.2.2
 python-jose==3.5.0
 SQLAlchemy==2.0.51
-psycopg
+psycopg[binary]
 uvicorn
 python-multipart

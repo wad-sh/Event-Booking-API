@@ -136,6 +136,7 @@ The project includes an admin creation script to initialize the first administra
 Run:
 
 ```bash
+cd app
 py -m scripts.create_admin
 ```
 The script will:

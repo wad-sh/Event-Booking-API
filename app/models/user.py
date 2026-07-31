@@ -2,6 +2,8 @@ from database.database import Base
 from sqlalchemy import Column,Integer,String,Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from enums.adminuser import AdminUser
+from models.reservation import Reservation
+from models.event import Event
 
 class User (Base) :
     __tablename__ = "users"

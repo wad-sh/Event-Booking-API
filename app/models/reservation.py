@@ -2,7 +2,7 @@ from database.database import Base
 from sqlalchemy import Column,Integer,DateTime,func,ForeignKey,UniqueConstraint
 from sqlalchemy.orm import relationship
 
-class Reservation (Base) :
+class Reservation(Base) :
     __tablename__ = "reservations"
 
     __table_args__ = (

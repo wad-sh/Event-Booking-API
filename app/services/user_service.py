@@ -61,4 +61,3 @@ def user_login (db:Session, data: OAuth2PasswordRequestForm) :
         "access_token" : access_token,
         "token_type" : "bearer"
     }
-
