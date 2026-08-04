@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from models.reservation import Reservation
-from models.event import Event
-from schemas.reservation_schema import *
+from app.models.reservation import Reservation
+from app.models.event import Event
+from app.schemas.reservation_schema import *
 
 def create_reserv (db:Session,user_id: int,event_id: int) : 
     try:

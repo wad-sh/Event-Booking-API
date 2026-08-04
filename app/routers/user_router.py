@@ -1,10 +1,10 @@
-from services.user_service import user_login,user_reg
+from app.services.user_service import user_login,user_reg
 from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
-from schemas.user_schema import UserResp,UserReg
-from database.database import get_db
-from  schemas.token_schema import Token
+from app.schemas.user_schema import UserResp,UserReg
+from app.database.database import get_db
+from app.schemas.token_schema import Token
 
 
 

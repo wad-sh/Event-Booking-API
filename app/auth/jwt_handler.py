@@ -1,7 +1,7 @@
-from schemas.token_schema import Token
+from app.schemas.token_schema import Token
 from jose import jwt,JWTError
 from datetime import datetime,timedelta,timezone
-from config import ACCESS_TOKEN_EXPIRE_MINUTES,ALGORITHM,SECRET_KEY
+from app.config import ACCESS_TOKEN_EXPIRE_MINUTES,ALGORITHM,SECRET_KEY
 
 
 

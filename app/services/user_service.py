@@ -1,12 +1,12 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from models.user import User
-from schemas.token_schema import Token
-from auth.security import hash_pw,ver_pw
-from schemas.user_schema import UserReg
+from app.models.user import User
+from app.schemas.token_schema import Token
+from app.auth.security import hash_pw,ver_pw
+from app.schemas.user_schema import UserReg
 from fastapi.security import OAuth2PasswordRequestForm
-from enums.adminuser import AdminUser
-from auth.jwt_handler import create_access_token
+from app.enums.adminuser import AdminUser
+from app.auth.jwt_handler import create_access_token
 
 
 def user_reg (db: Session,data: UserReg) :

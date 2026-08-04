@@ -1,10 +1,10 @@
-from services.event_service import *
+from app.services.event_service import *
 from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
-from schemas.event_schema import *
-from database.database import get_db
-from auth.dep import req_admin
-from models.user import User
+from app.schemas.event_schema import *
+from app.database.database import get_db
+from app.auth.dep import req_admin
+from app.models.user import User
 from typing import List
 
 

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from models.event import Event
-from schemas.event_schema import *
+from app.models.event import Event
+from app.schemas.event_schema import *
 from datetime import datetime,timezone
 
 

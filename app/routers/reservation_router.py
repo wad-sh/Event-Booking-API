@@ -1,10 +1,10 @@
-from services.reservation_service import *
+from app.services.reservation_service import *
 from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
-from schemas.reservation_schema import *
-from database.database import get_db
-from auth.dep import get_crr_u
-from models.user import User
+from app.schemas.reservation_schema import *
+from app.database.database import get_db
+from app.auth.dep import get_crr_u
+from app.models.user import User
 
 res_router = APIRouter(
     tags=["reservations"]

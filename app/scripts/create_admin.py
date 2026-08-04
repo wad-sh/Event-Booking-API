@@ -1,9 +1,9 @@
-from database.database import SessionLocal
-from models.user import User
-from models.reservation import Reservation
-from models.event import Event
-from auth.security import hash_pw
-from enums.adminuser import AdminUser
+from app.database.database import SessionLocal
+from app.models.user import User
+from app.models.reservation import Reservation
+from app.models.event import Event
+from app.auth.security import hash_pw
+from app.enums.adminuser import AdminUser
 from getpass import getpass
 
 db = SessionLocal()

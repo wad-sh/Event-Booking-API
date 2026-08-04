@@ -1,8 +1,8 @@
-from database.database import Base,engine
+from app.database.database import Base,engine
 from fastapi import FastAPI
-from routers.event_router import event_router
-from routers.user_router import user_router
-from routers.reservation_router import res_router
+from app.routers.event_router import event_router
+from app.routers.user_router import user_router
+from app.routers.reservation_router import res_router
 
 app = FastAPI()
 

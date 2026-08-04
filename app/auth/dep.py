@@ -1,10 +1,10 @@
 from fastapi import HTTPException,Depends
-from auth.jwt_handler import verify_token
+from app.auth.jwt_handler import verify_token
 from sqlalchemy.orm import Session
-from models.user import User
-from database.database import get_db
+from app.models.user import User
+from app.database.database import get_db
 from fastapi.security import OAuth2PasswordBearer
-from enums.adminuser import AdminUser
+from app.enums.adminuser import AdminUser
 
 
 
