@@ -34,4 +34,22 @@ def client (db_session):
             yield db_session
 
     app.dependency_overrides[get_db] = override_get_db
-    return TestClient(app)
+    yield TestClient(app)
+    app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def reg_user (client) :
+    user_data = {
+        "username": "test_1",
+        "email": "test1@gmail.com",
+        "password": "123"
+    }
+
+    r = client.post(
+        "/users/register",
+        json=user_data
+    )
+
+    assert r.status_code == 200
+    return user_data
