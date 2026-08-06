@@ -13,7 +13,7 @@ event_router = APIRouter(
     tags=["Events"]
 )
 
-@event_router.post("",response_model=EventRespLong)
+@event_router.post("",status_code=201,response_model=EventRespLong)
 def e_create (
     data: EventCreate,
     db: Session = Depends(get_db),

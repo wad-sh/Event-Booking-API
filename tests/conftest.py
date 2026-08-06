@@ -5,6 +5,10 @@ from sqlalchemy.orm import sessionmaker
 from app.database.database import Base, get_db
 from sqlalchemy import create_engine
 from app.config import TEST_DATABASE_URL
+from app.models.user import User
+from app.auth.security import hash_pw
+from app.enums.adminuser import AdminUser
+
 
 test_engine = create_engine(TEST_DATABASE_URL)
 
@@ -39,7 +43,7 @@ def client (db_session):
 
 
 @pytest.fixture
-def reg_user (client) :
+def user (client) :
     user_data = {
         "username": "test_1",
         "email": "test1@gmail.com",
@@ -53,3 +57,67 @@ def reg_user (client) :
 
     assert r.status_code == 200
     return user_data
+
+@pytest.fixture
+def admin_user (db_session) :
+    admin = User(
+         username = "admin1",
+         email = "admin@gmail.com",
+         hashed_password = hash_pw("123"),
+         role=AdminUser.admin
+                 )
+    db_session.add(admin)
+    db_session.commit()
+    db_session.refresh (admin)
+
+    return admin
+
+@pytest.fixture
+def admin_token (client,admin_user) :
+    login_resp = client.post(
+         "/users/login",
+         data={
+              "username" : admin_user.email,
+              "password" : "123"
+         }
+    
+    )
+    assert login_resp.status_code == 200
+    assert "access_token" in login_resp.json()
+
+    return login_resp.json()["access_token"]
+
+@pytest.fixture
+def user_token (client,user) :
+    login_resp = client.post(
+         "/users/login",
+         data={
+              "username": user["email"],
+              "password" : "123"
+         }
+    
+    )
+    assert login_resp.status_code == 200
+    assert "access_token" in login_resp.json()
+
+    return login_resp.json()["access_token"]
+
+@pytest.fixture
+def event (client,admin_token) :
+    resp = client.post(
+            "/events",
+            headers={
+                "Authorization" : f"Bearer {admin_token}"
+            },
+            json={
+                "title": "Python Conference",
+                "description": "Backend event",
+                "capacity": 100,
+                "date": "2027-09-01T10:00:00+00:00"
+            }
+        )
+    
+    assert resp.status_code == 201
+    assert resp.json()["title"] == "Python Conference"
+
+    return int(resp.json()["id"])

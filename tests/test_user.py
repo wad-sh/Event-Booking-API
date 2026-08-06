@@ -15,7 +15,7 @@ def test_register_success (client) :
 
 
 
-def test_reg_used_username (client,reg_user) :
+def test_reg_used_username (client,user) :
     
     response = client.post(
         "/users/register",
@@ -29,7 +29,7 @@ def test_reg_used_username (client,reg_user) :
     assert response.status_code == 409
     assert response.json()["detail"] == "username already existed"
 
-def test_reg_used_email (client,reg_user) :
+def test_reg_used_email (client,user) :
     
 
     response = client.post(
@@ -45,7 +45,7 @@ def test_reg_used_email (client,reg_user) :
     assert response.json()["detail"] == "email already existed"
 
 
-def test_login_success (client,reg_user) :
+def test_login_success (client,user) :
     
 
     response = client.post(
@@ -61,7 +61,7 @@ def test_login_success (client,reg_user) :
     assert response.json()["token_type"] == "bearer"
 
 
-def test_login_wrong_password (client,reg_user) :
+def test_login_wrong_password (client,user) :
     
 
     response = client.post(
@@ -75,7 +75,7 @@ def test_login_wrong_password (client,reg_user) :
     assert response.status_code == 401
     assert response.json()["detail"] =="wrong email or password"
 
-def test_login_wrong_email (client,reg_user) :
+def test_login_wrong_email (client,user) :
     
     
     response = client.post(
