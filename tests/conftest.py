@@ -121,3 +121,43 @@ def event (client,admin_token) :
     assert resp.json()["title"] == "Python Conference"
 
     return int(resp.json()["id"])
+@pytest.fixture
+def full_event (client,admin_token) :
+    resp = client.post(
+            "/events",
+            headers={
+                "Authorization" : f"Bearer {admin_token}"
+            },
+            json={
+                "title": "Project",
+                "description": "",
+                "capacity": 1,
+                "date": "2027-07-01T10:00:00+00:00"
+            }
+        )
+    
+    assert resp.status_code == 201
+    assert resp.json()["title"] == "Project"
+
+    e_id = int(resp.json()["id"])
+
+    reserv = client.post(
+        f"/events/{e_id}/reserve",
+        headers={
+                        "Authorization" : f"Bearer {admin_token}"
+                }
+    )
+    assert reserv.status_code == 200
+    return e_id
+
+@pytest.fixture
+def reservation (client,event,user_token) :
+    r = client.post(
+            f"/events/{event}/reserve",
+            headers={
+                "Authorization" : f"Bearer {user_token}"
+            }
+        )
+    
+    assert r.status_code == 200
+    assert "id" in r.json()

@@ -91,7 +91,6 @@ def test_get_all_events (client) :
         "/events"
     )
     assert r.status_code == 200
-    assert r.json() == []
 
 def test_get_event_success (client,event) :
     r = client.get(

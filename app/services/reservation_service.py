@@ -35,7 +35,7 @@ def create_reserv (db:Session,user_id: int,event_id: int) :
 
         return new_res
     except HTTPException:
-        db.rollback
+        db.rollback()
         raise
     except Exception:
         db.rollback()
@@ -48,7 +48,7 @@ def delete_reserv (db:Session,user_id: int,event_id: int) :
     if res is None:
             raise HTTPException(
                     status_code=404,
-                    detail="Reservation not found"
+                    detail="Reservation or event not found"
                 )
     db.delete(res)
     db.commit()
